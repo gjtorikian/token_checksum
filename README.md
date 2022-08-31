@@ -1,6 +1,6 @@
 # TokenChecksum
 
-Generates a 37 character long random token, with an (optional) prefix and a 32-bit checksum in the last 6 digits. Inspired by:
+Generates a 30 character long random token, with a prefix and a 32-bit checksum in the last 6 digits. Inspired by:
 
 * https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/
 * https://github.com/stefansundin/token-checksum
