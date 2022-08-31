@@ -12,7 +12,8 @@ class TestTokenChecksum < Minitest::Test
   end
 
   def test_has_correct_prefix
-    assert_equal("wow_", TokenChecksum.generate("wow")[0...4])
+    token = TokenChecksum.generate("wow")
+    assert_equal("wow", TokenChecksum.prefix(token))
   end
 
   def test_validation
@@ -23,6 +24,17 @@ class TestTokenChecksum < Minitest::Test
     refute(TokenChecksum.valid?(token + "x"))
     assert(TokenChecksum.valid?(token, secret: secret))
     refute(TokenChecksum.valid?(token + "x", secret: secret))
+  end
+
+  def test_validation_with_prefix
+    prefix = "ypt"
+    secret = "so_secret"
+    token = TokenChecksum.generate(prefix, secret: secret)
+
+    refute(TokenChecksum.valid?(token))
+    assert(TokenChecksum.valid?(token, secret: secret))
+    assert(TokenChecksum.valid?(token, valid_prefixes: [prefix], secret: secret))
+    refute(TokenChecksum.valid?(token, valid_prefixes: ["other"], secret: secret))
   end
 
   def test_works_for_short_prefixes

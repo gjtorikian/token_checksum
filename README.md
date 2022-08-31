@@ -36,6 +36,16 @@ TokenChecksum.valid?(token_two, secret: "foo")
 
 TokenChecksum.valid?(token_two, secret: "bleh")
 # FALSE
+
+# can also validate on prefix
+TokenChecksum.valid?(token_one)
+# true
+
+TokenChecksum.valid?(token_one, valid_prefixes: ["xoxo"])
+# true
+
+TokenChecksum.valid?(token_one, valid_prefixes: ["abcd"])
+# FALSE
 ```
 
 ## License
