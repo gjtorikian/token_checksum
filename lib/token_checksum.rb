@@ -12,6 +12,8 @@ if ENV.fetch("DEBUG", "false")
 end
 
 module TokenChecksum
+  REGEX = /([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,})_([0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{30})([0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{6})/
+
   class << self
     def generate(prefix, secret: "")
       suffix = (random_base62 + random_base62)[0...30]
@@ -41,7 +43,7 @@ module TokenChecksum
     end
 
     private def random_base62
-      Base62.encode(SecureRandom.uuid.delete("-").hex)
+      Base62.encode(SecureRandom.uuid.delete("-").to_i(16))
     end
   end
 end
